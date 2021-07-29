@@ -8,15 +8,18 @@
         <outputRelativeToContentRoot value="true" />
         <module name="cursoSpringBoot_Modulo_1" />
         <module name="cursoSpringBoot_Modulo_bancoDeDados_02" />
+        <module name="SistemaVendas" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cursoSpringBoot_Modulo_1" target="11" />
       <module name="cursoSpringBoot_Modulo_bancoDeDados_02" target="11" />
+      <module name="SistemaVendas" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SistemaVendas" options="-parameters" />
       <module name="cursoSpringBoot_Modulo_1" options="-parameters" />
       <module name="cursoSpringBoot_Modulo_bancoDeDados_02" options="-parameters" />
     </option>

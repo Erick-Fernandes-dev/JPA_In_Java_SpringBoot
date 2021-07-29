@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../cursoSpringBoot_Modulo_02_baseDeDados_SpringData/SistemaVendas.iml" filepath="$PROJECT_DIR$/../cursoSpringBoot_Modulo_02_baseDeDados_SpringData/SistemaVendas.iml" />
       <module fileurl="file://$PROJECT_DIR$/../cursoSpringBoot_Modulo_01/cursoSpringBoot_Modulo_1.iml" filepath="$PROJECT_DIR$/../cursoSpringBoot_Modulo_01/cursoSpringBoot_Modulo_1.iml" />
       <module fileurl="file://$PROJECT_DIR$/cursoSpringBoot_Modulo_bancoDeDados_02.iml" filepath="$PROJECT_DIR$/cursoSpringBoot_Modulo_bancoDeDados_02.iml" />
     </modules>

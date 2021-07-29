@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Clientes {
 
     //private static String INSERT = "insert into cliente (nome) values (?) ";
     private static String SELECT_ALL = "SELECT * FROM CLIENTE ";
-    private static String UPDATE = "update cliente set nome = ? where id = ?";
+    //private static String UPDATE = "update cliente set nome = ? where id = ?";
     private static String DELETE = "delete from cliente where id = ? ";
 
     @Autowired
@@ -37,37 +38,49 @@ public class Clientes {
 
     }
 
-
+    @Transactional
     public Cliente atualizar(Cliente cliente) {
-
-        jdbcTemplate.update(UPDATE, new Object[] {
-                cliente.getNome(),
-                cliente.getId()
-        });
+        //
+        this.entityManager.merge(cliente);
 
         return cliente;
     }
 
+    @Transactional
     public void deletar(Cliente cliente) {
-        deletar(cliente.getId());
+        if (!this.entityManager.contains(cliente)) {
+            cliente = entityManager.merge(cliente);
+
+        }
+
+        entityManager.remove(cliente);
 
     }
 
+    @Transactional
     public void deletar(Integer id) {
-        this.jdbcTemplate.update(DELETE, new Object[] {id});
+        Cliente cliente = entityManager.find(Cliente.class, id);
+        deletar(cliente);
     }
 
+    @Transactional(readOnly = true)
     public List<Cliente> obterTodos() {
 
-        return jdbcTemplate.query(SELECT_ALL, obterClienteMapper());
+        return this.entityManager
+                .createQuery("from Cliente", Cliente.class)
+                .getResultList();
 
     }
 
+    @Transactional(readOnly = true)//apenas leitura
     public List<Cliente> buscarPorNome(String nome) {
-        return this.jdbcTemplate.query(
-                SELECT_ALL.concat("where nome like ? "),
-                new Object[]{"%" + nome + "%"},
-                obterClienteMapper());
+        //:nome, esse ':' --> Servem para definir um parametro jpa
+        String jpql = " select c from Cliente c where c.nome = :nome ";
+
+        TypedQuery<Cliente> query = entityManager.createQuery(jpql, Cliente.class);
+        query.setParameter("nome", "%" + nome + "%");
+
+        return query.getResultList();
     }
 
     private RowMapper<Cliente> obterClienteMapper() {
